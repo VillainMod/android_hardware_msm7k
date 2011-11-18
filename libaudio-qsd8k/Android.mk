@@ -5,7 +5,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_SRC_FILES:=               \
+LOCAL_SRC_FILES:= \
     AudioPolicyManager.cpp
 
 LOCAL_SHARED_LIBRARIES := \
@@ -13,13 +13,15 @@ LOCAL_SHARED_LIBRARIES := \
     libutils \
     libmedia
 
-LOCAL_STATIC_LIBRARIES := libaudiopolicybase
+LOCAL_STATIC_LIBRARIES := \
+    libaudiopolicy_legacy \
+    libmedia_helper
 
 LOCAL_MODULE:= libaudiopolicy
 
-ifeq ($(BOARD_HAVE_BLUETOOTH),true)
-  LOCAL_CFLAGS += -DWITH_A2DP
-endif
+#ifeq ($(BOARD_HAVE_BLUETOOTH),true)
+#  LOCAL_CFLAGS += -DWITH_A2DP
+#endif
 
 include $(BUILD_SHARED_LIBRARY)
 
@@ -32,18 +34,20 @@ LOCAL_SHARED_LIBRARIES := \
     libcutils \
     libutils \
     libmedia \
-    libhardware_legacy
+    libhardware_legacy \
+    libdl
 
-LOCAL_SHARED_LIBRARIES += libdl
-
-LOCAL_SRC_FILES += AudioHardware.cpp
+LOCAL_SRC_FILES := AudioHardware.cpp
 
 LOCAL_CFLAGS += -fno-short-enums
 
-LOCAL_STATIC_LIBRARIES += libaudiointerface
-ifeq ($(BOARD_HAVE_BLUETOOTH),true)
-  LOCAL_SHARED_LIBRARIES += liba2dp
-endif
+LOCAL_STATIC_LIBRARIES := \
+    libaudiohw_legacy \
+    libmedia_helper
+
+#ifeq ($(BOARD_HAVE_BLUETOOTH),true)
+#  LOCAL_SHARED_LIBRARIES += liba2dp
+#endif
 
 include $(BUILD_SHARED_LIBRARY)
 
