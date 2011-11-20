@@ -230,9 +230,13 @@ AudioStreamOut* AudioHardware::openOutputStream(
         if (mOutput) {
             if (status) {
                 *status = INVALID_OPERATION;
-            }
-            return 0;
-        }
+            } else { 
+				LOGD("Output stream already exists, using existing channels and format"); 
+				*status = NO_ERROR; 
+			} 
+		} 
+		return mOutput; 
+	}
 
         // create new output stream
         AudioStreamOutMSM72xx* out = new AudioStreamOutMSM72xx();
