@@ -59,7 +59,11 @@
         if (__builtin_expect (cond, 0)) {                                      \
             fprintf(stderr, "%s:%s:(%d): ", __FILE__, __FUNCTION__, __LINE__); \
             fprintf(stderr, ##msg);                                            \
+<<<<<<< HEAD
+            ALOGE(msg);                                                         \
+=======
             ALOGE(msg);                                            \
+>>>>>>> fda23ef... librpc: fix logging statements for JB
         }                                                                      \
     } while(0)
 
